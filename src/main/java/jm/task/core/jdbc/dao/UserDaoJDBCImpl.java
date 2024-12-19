@@ -16,7 +16,7 @@ public class UserDaoJDBCImpl implements UserDao {
         String sql = "CREATE TABLE IF NOT EXISTS USERS (" +
                 "id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
                 "name VARCHAR(50), " +
-                "lastName VARCHAR(50), " +
+                "last_name VARCHAR(50), " +
                 "age TINYINT)";
         try (Connection connection = Util.getConnection();
              Statement statement = connection.createStatement()) {
@@ -39,7 +39,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        String sql = "INSERT INTO USERS (name, lastName, age) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO USERS (name, last_name, age) VALUES (?, ?, ?)";
         try (Connection connection = Util.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, name);
@@ -65,7 +65,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public List<User> getAllUsers() {
-        List<User> users = new ArrayList<User>();
+        List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM USERS";
         try (Connection connection = Util.getConnection();
              Statement statement = connection.createStatement();
@@ -74,7 +74,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 User user = new User();
                 user.setId(resultSet.getLong("id"));
                 user.setName(resultSet.getString("name"));
-                user.setLastName(resultSet.getString("lastName"));
+                user.setLastName(resultSet.getString("last_name"));
                 user.setAge(resultSet.getByte("age"));
                 users.add(user);
             }
